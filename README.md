@@ -20,8 +20,6 @@
 
 A clear starter project for a real-time online quiz system using ASP.NET Core, SignalR, Entity Framework Core, and MySQL.
 
-## Features
-
 - Host creates a quiz room and shares a 6-character code
 - Simple host login for the admin/host area
 - Host chooses quiz name, description, number of questions, and total quiz time
