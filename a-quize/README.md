@@ -1,7 +1,7 @@
 # Online Real-Time Quiz System
 
 ## Requirements
-- Visual Studio 2015 or later
+- Visual Studio 2022
 - SQL Server
 
 ## Installation
