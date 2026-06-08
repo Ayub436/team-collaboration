@@ -1,0 +1,18 @@
+@page "{code}"
+@model RealtimeQuiz.Pages.LeaderboardModel
+@{
+    ViewData["Title"] = "Leaderboard";
+}
+
+<section class="center-panel" data-code="@Model.Code">
+    <div class="panel">
+        <p class="eyebrow">@Model.SessionTitle</p>
+        <h1>Leaderboard</h1>
+        <ol id="leaderboard" class="leaderboard"></ol>
+    </div>
+</section>
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/8.0.7/signalr.min.js"></script>
+    <script src="~/js/leaderboard.js" asp-append-version="true"></script>
+}

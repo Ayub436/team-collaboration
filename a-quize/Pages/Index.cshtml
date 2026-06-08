@@ -1,0 +1,18 @@
+@page
+@model RealtimeQuiz.Pages.IndexModel
+@{
+    ViewData["Title"] = "Home";
+}
+
+<section class="hero">
+    <div>
+        <p class="eyebrow">ASP.NET Core + SignalR + MySQL</p>
+        <h1>Run a live quiz with instant answers, scoring, and leaderboard updates.</h1>
+        <p class="lede">Create a host room, share the quiz code, publish questions, and watch the results update in real time.</p>
+        <div class="actions">
+            <a class="button primary" asp-page="/Host">Create Quiz</a>
+            <a class="button" asp-page="/StudentLogin">Student Login</a>
+            <a class="button" asp-page="/Register">Register</a>
+        </div>
+    </div>
+</section>

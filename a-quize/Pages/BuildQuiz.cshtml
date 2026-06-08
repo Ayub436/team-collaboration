@@ -1,0 +1,93 @@
+@page "{code}"
+@model RealtimeQuiz.Pages.BuildQuizModel
+@{
+    ViewData["Title"] = "Build Quiz";
+}
+
+<section class="grid two">
+    <div class="panel">
+        <p class="eyebrow">Quiz builder</p>
+        <h1>@Model.SessionTitle</h1>
+        <p class="lede small">@Model.Description</p>
+
+        <div class="notice">
+            Added @Model.AddedQuestionCount of @Model.PlannedQuestionCount questions.
+        </div>
+
+        @if (!string.IsNullOrWhiteSpace(Model.Message))
+        {
+            <div class="notice error">@Model.Message</div>
+        }
+
+        @if (Model.CanAddMore)
+        {
+            <form method="post" asp-page-handler="AddQuestion" class="stack">
+                <label>
+                    Question
+                    <input asp-for="QuestionInput.Text" placeholder="Type the question" />
+                </label>
+                <label>
+                    Option A
+                    <input asp-for="QuestionInput.OptionA" />
+                </label>
+                <label>
+                    Option B
+                    <input asp-for="QuestionInput.OptionB" />
+                </label>
+                <label>
+                    Option C
+                    <input asp-for="QuestionInput.OptionC" />
+                </label>
+                <label>
+                    Option D
+                    <input asp-for="QuestionInput.OptionD" />
+                </label>
+                <label>
+                    Correct option
+                    <select asp-for="QuestionInput.CorrectOptionIndex">
+                        <option value="0">A</option>
+                        <option value="1">B</option>
+                        <option value="2">C</option>
+                        <option value="3">D</option>
+                    </select>
+                </label>
+                <label>
+                    Points
+                    <input asp-for="QuestionInput.Points" type="number" min="1" max="100" />
+                </label>
+                <div class="actions">
+                    <button class="button primary" type="submit">Add Question</button>
+                    <a class="button" asp-page="/Host">Cancel</a>
+                </div>
+            </form>
+        }
+        else if (!Model.IsPublished)
+        {
+            <form method="post" asp-page-handler="Publish">
+                <button class="button primary" type="submit">Publish Quiz</button>
+            </form>
+        }
+        else
+        {
+            <div class="actions">
+                <a class="button primary" asp-page="/HostRoom" asp-route-code="@Model.Code">Open Host Room</a>
+                <a class="button" asp-page="/Leaderboard" asp-route-code="@Model.Code">Leaderboard</a>
+            </div>
+        }
+    </div>
+
+    <div class="panel">
+        <p class="eyebrow">Questions</p>
+        <div class="list">
+            @foreach (var question in Model.Questions)
+            {
+                <article class="list-row tall">
+                    <div>
+                        <strong>@question.Order. @question.Text</strong>
+                        <span>@question.Points points</span>
+                    </div>
+                </article>
+            }
+        </div>
+    </div>
+</section>

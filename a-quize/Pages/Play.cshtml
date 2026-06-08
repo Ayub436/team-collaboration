@@ -1,0 +1,63 @@
+@page "{code}/{participantId:int}"
+@model RealtimeQuiz.Pages.PlayModel
+@{
+    ViewData["Title"] = "Play";
+}
+
+<section class="play-layout" data-ended="@Model.IsSubmitted.ToString().ToLowerInvariant()">
+    <div class="panel question-panel">
+        <p class="eyebrow">@Model.SessionTitle</p>
+        <div class="exam-header">
+            <div>
+                <h1 id="questionTitle">Question</h1>
+                <p class="muted">Playing as @Model.ParticipantName</p>
+            </div>
+            <div class="timer"><span id="timer">--:--</span></div>
+        </div>
+
+        @if (Model.IsSubmitted)
+        {
+            <div class="notice">Submitted. Your score is @Model.Score points.</div>
+            <div class="actions">
+                <a class="button primary" asp-page="/Leaderboard" asp-route-code="@Model.Code">View Leaderboard</a>
+                <a class="button" asp-page="/Quizzes">Back to Quizzes</a>
+            </div>
+        }
+        else
+        {
+            <form method="post" id="quizForm">
+                <input type="hidden" name="answersJson" id="answersJson" />
+                <input type="hidden" id="endsAtUtc" value="@Model.EndsAtUtcIso" />
+
+                <div id="questionText" class="question-text"></div>
+                <div id="options" class="options"></div>
+
+                <div class="question-nav">
+                    <button class="button" type="button" id="previousQuestion">Previous</button>
+                    <span id="questionProgress"></span>
+                    <button class="button" type="button" id="nextQuestion">Next</button>
+                </div>
+
+                <div class="notice" id="answerStatus">You can change your selected options before submitting.</div>
+
+                <div class="actions">
+                    <button class="button primary" type="submit" id="submitQuiz">Submit Quiz</button>
+                    <a class="button" asp-page="/Quizzes">Cancel</a>
+                </div>
+            </form>
+        }
+    </div>
+
+    <aside class="panel">
+        <p class="eyebrow">Questions</p>
+        <div id="questionMap" class="question-map"></div>
+    </aside>
+</section>
+
+<script type="application/json" id="questionsData">
+@Html.Raw(Model.QuestionsJson)
+</script>
+
+@section Scripts {
+    <script src="~/js/play.js" asp-append-version="true"></script>
+}
