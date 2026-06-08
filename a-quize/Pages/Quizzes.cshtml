@@ -1,0 +1,39 @@
+@page
+@model RealtimeQuiz.Pages.QuizzesModel
+@{
+    ViewData["Title"] = "Available Quizzes";
+}
+
+<section class="panel">
+    <p class="eyebrow">Welcome, @Model.UserName</p>
+    <h1>Available published quizzes</h1>
+
+    @if (!Model.Quizzes.Any())
+    {
+        <div class="notice">No quizzes are published yet. Check back after the host publishes one.</div>
+    }
+
+    <div class="quiz-grid">
+        @foreach (var quiz in Model.Quizzes)
+        {
+            <article class="quiz-card">
+                <div>
+                    <h2>@quiz.Title</h2>
+                    <p>@quiz.Description</p>
+                    <span>@quiz.QuestionCount questions - @quiz.TotalMinutes minutes</span>
+                </div>
+                <div class="actions">
+                    <form method="post" asp-page-handler="Start" asp-route-code="@quiz.Code">
+                        <button class="button primary" type="submit">@quiz.ActionText</button>
+                    </form>
+                    <a class="button" asp-page="/Leaderboard" asp-route-code="@quiz.Code">Leaderboard</a>
+                </div>
+            </article>
+        }
+    </div>
+</section>
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/8.0.7/signalr.min.js"></script>
+    <script src="~/js/quizzes.js" asp-append-version="true"></script>
+}

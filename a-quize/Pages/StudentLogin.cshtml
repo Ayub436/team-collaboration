@@ -1,0 +1,30 @@
+@page
+@model RealtimeQuiz.Pages.StudentLoginModel
+@{
+    ViewData["Title"] = "Student Login";
+}
+
+<section class="center-panel">
+    <div class="panel">
+        <p class="eyebrow">Student account</p>
+        <h1>Login</h1>
+
+        @if (!string.IsNullOrWhiteSpace(Model.Message))
+        {
+            <div class="notice error">@Model.Message</div>
+        }
+
+        <form method="post" class="stack">
+            <label>
+                Email
+                <input asp-for="Input.Email" type="email" />
+            </label>
+            <label>
+                Password
+                <input asp-for="Input.Password" type="password" />
+            </label>
+            <button class="button primary" type="submit">Login</button>
+            <a asp-page="/Register">Create a student account</a>
+        </form>
+    </div>
+</section>

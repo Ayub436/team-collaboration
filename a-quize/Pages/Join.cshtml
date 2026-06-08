@@ -1,0 +1,29 @@
+@page
+@model RealtimeQuiz.Pages.JoinModel
+@{
+    ViewData["Title"] = "Join Quiz";
+}
+
+<section class="center-panel">
+    <div class="panel">
+        <p class="eyebrow">Participant</p>
+        <h1>Join a live quiz</h1>
+
+        @if (!string.IsNullOrWhiteSpace(Model.Message))
+        {
+            <div class="notice error">@Model.Message</div>
+        }
+
+        <form method="post" class="stack">
+            <label>
+                Quiz code
+                <input asp-for="Input.Code" maxlength="6" placeholder="ABC123" />
+            </label>
+            <label>
+                Your name
+                <input asp-for="Input.Name" maxlength="80" placeholder="Enter your name" />
+            </label>
+            <button class="button primary" type="submit">Join Quiz</button>
+        </form>
+    </div>
+</section>

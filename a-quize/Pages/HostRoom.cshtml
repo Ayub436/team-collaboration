@@ -1,0 +1,29 @@
+@page "{code}"
+@model RealtimeQuiz.Pages.HostRoomModel
+@{
+    ViewData["Title"] = "Host Room";
+}
+
+<section class="grid two" data-code="@Model.Code">
+    <div class="panel">
+        <p class="eyebrow">Quiz code</p>
+        <h1 class="code">@Model.Code</h1>
+        <h2>@Model.SessionTitle</h2>
+        <p class="lede small">This quiz is published. Students can now see it, start their own attempt, navigate questions, and submit before the overall timer ends.</p>
+        <div class="actions">
+            <a class="button" asp-page="/Leaderboard" asp-route-code="@Model.Code">Leaderboard</a>
+            <a class="button" asp-page="/BuildQuiz" asp-route-code="@Model.Code">Quiz Details</a>
+        </div>
+        <div id="hostStatus" class="notice">Waiting for submitted attempts...</div>
+    </div>
+
+    <div class="panel">
+        <p class="eyebrow">Live leaderboard</p>
+        <ol id="leaderboard" class="leaderboard"></ol>
+    </div>
+</section>
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/8.0.7/signalr.min.js"></script>
+    <script src="~/js/host.js" asp-append-version="true"></script>
+}

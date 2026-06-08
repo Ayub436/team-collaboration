@@ -1,0 +1,56 @@
+@page
+@model RealtimeQuiz.Pages.HostModel
+@{
+    ViewData["Title"] = "Host Quiz";
+}
+
+<section class="grid two">
+    <div class="panel">
+        <p class="eyebrow">Host console</p>
+        <h1>Manage quizzes</h1>
+
+        @if (!string.IsNullOrWhiteSpace(Model.Message))
+        {
+            <div class="notice">@Model.Message</div>
+        }
+
+        <form method="post" class="stack">
+            <label>
+                Quiz title
+                <input asp-for="CreateQuiz.Title" placeholder="e.g. Software Engineering Quiz" />
+            </label>
+            <label>
+                Description
+                <input asp-for="CreateQuiz.Description" placeholder="Short description for students" />
+            </label>
+            <label>
+                Number of questions
+                <input asp-for="CreateQuiz.QuestionCount" type="number" min="1" max="50" />
+            </label>
+            <label>
+                Overall quiz time in minutes
+                <input asp-for="CreateQuiz.TotalMinutes" type="number" min="1" max="180" />
+            </label>
+            <button class="button primary" type="submit">Create Quiz</button>
+        </form>
+    </div>
+
+    <div class="panel">
+        <p class="eyebrow">Your quizzes</p>
+        <div class="list">
+            @foreach (var quiz in Model.Quizzes)
+            {
+                <article class="list-row">
+                    <div>
+                        <strong>@quiz.Title</strong>
+                        <span>@quiz.QuestionCount questions • @quiz.Status • Code: @quiz.Code</span>
+                    </div>
+                    <div class="actions compact">
+                        <a class="button small" asp-page="/BuildQuiz" asp-route-code="@quiz.Code">Edit</a>
+                        <a class="button small" asp-page="/HostRoom" asp-route-code="@quiz.Code">Run</a>
+                    </div>
+                </article>
+            }
+        </div>
+    </div>
+</section>
